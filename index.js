@@ -120,6 +120,11 @@ function formatSarifToolDriverRules(results) {
             '| --- | --- | --- | --- | --- | --- | --- | --- |\n' +
             '| [' + vuln.id + '](' + vuln.link + ') | ' + vuln.severity + ' | ' + (vuln.cvss || 'N/A') + ' | ' + vuln.packageName + ' | ' + vuln.packageVersion + ' | ' + (vuln.status || 'not fixed') + ' | ' + vuln.publishedDate + ' | ' + vuln.discoveredDate + ' |',
         },
+        properties: {
+          precision: "high",
+          "problem.severity": "warning",
+          "security-severity": vuln.cvss,
+        },
       };
     });
   }
@@ -164,7 +169,6 @@ function formatSarifResults(results) {
     return findings.map(finding => {
       return {
         ruleId: `${finding.id}`,
-        level: 'warning',
         message: {
           text: `Description:\n${finding.description}`,
         },
